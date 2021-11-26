@@ -1,0 +1,141 @@
+@import url("https://use.typekit.net/ddz2tth.css");
+
+html {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+}
+
+body {
+    background-image: url("../assets/bg.svg");
+    padding: 0;
+    margin: 0;
+    font-family: broadacre-medium-1, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    color: #f7b394;
+}
+
+#logo {
+    height: 200px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+#content {
+    display: flex;
+    min-height: calc(100vh - 200px);
+    min-width: 100vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+#heading {
+    width: 100%;
+}
+
+#heading > h1 {
+    text-align: center;
+    font-size: 3em;
+    width: 100%;
+    margin: 0;
+}
+#heading > h3 {
+    text-align: center;
+    margin: 0.5em 0;
+    width: 100%;
+}
+
+#form {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: center;
+    flex-direction: column;
+}
+
+@media screen and (max-width:720px) {
+    #form .input-group {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        margin-top: 15px;
+        flex-direction: column;
+    }
+}
+@media screen and (min-width:720px) {
+    #form .input-group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: stretch;
+        align-content: stretch;
+        margin-top: 15px;
+    }
+}
+
+#form .input-group p {
+    color: #1a7178;
+    font-size: 1.5em;
+    width: 28px;
+    margin: 0;
+}
+
+#form .input-group input {
+    /* border-radius: 3px; */
+    border: 2px;
+    margin: 0 10px;
+    width: 25vw;
+    padding: 2px 15px;
+    font-size: 1.2em;
+    background-color: #94f7ed;
+    color: #f7b394;
+    border-color: #f7b394;
+    border-style: solid;
+    box-shadow: none;
+}
+
+#form .input-group input::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    opacity: 1; /* Firefox */
+}
+
+#form .input-group input::-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+#form .input-group input::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.remove-user-icon {
+    cursor: pointer;
+}
+
+.remove-user-icon:hover {
+    color: #1a7178;
+}
+
+#button-wrapper {
+    margin: 20px;
+    text-align: center;
+}

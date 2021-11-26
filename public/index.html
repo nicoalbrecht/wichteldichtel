@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://use.typekit.net/ddz2tth.css">
+    <link rel="stylesheet" href="assets/fa/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/btn.css">
+    <link rel="stylesheet" href="css/swal.css">
+    <title>Dichtel Wichtel</title>
+</head>
+<body>
+    <div id="logo">
+        <img src="assets/logo.png" alt="Dichtel Wichtel Logo">
+    </div>
+    <div id="content">
+        <div id="heading">
+            <h1>Wichtel Automator</h1>
+            <h3>Einfach unten Namen und E-Mail eintragen und auf Wichtel Alarm klicken</h3>
+        </div>
+        <div id="form">
+            <div class="input-group" data-id="1">
+                <p>1.</p>
+                <input type="text" name="name-1" id="name-1" placeholder="Name" value="Nico A">
+                <input type="email" name="mail-1" id="mail-1" placeholder="E-Mail" value="nicolai.albrecht96@gmail.com">
+                <span style="width: 28px; height: 32px;"></span>
+                <!-- <i class="fas fa-trash remove-user-icon fa-2x" data-id="1"></i> -->
+            </div>
+            <div class="input-group" data-id="2">
+                <p>2.</p>
+                <input type="text" name="name-2" id="name-2" placeholder="Name" value="Nico B">
+                <input type="email" name="mail-2" id="mail-2" placeholder="E-Mail" value="nicolai.albrecht@web.de">
+                <i class="fas fa-trash remove-user-icon fa-2x" data-id="2"></i>
+            </div>
+            <div class="input-group" data-id="3">
+                <p>3.</p>
+                <input type="text" name="name-3" id="name-3" placeholder="Name" value="Nico C">
+                <input type="email" name="mail-3" id="mail-3" placeholder="E-Mail" value="nico4albi@web.de">
+                <i class="fas fa-trash remove-user-icon fa-2x" data-id="3"></i>
+            </div>
+        </div>
+        <div id="button-wrapper">
+            <button class="bttn-unite bttn-lg bttn-primary" id="add-user-btn">Person hinzufügen</button>
+            <br>
+            <br>
+            <button class="bttn-unite bttn-lg bttn-primary" id="wichtel-btn">Wichtel Alarm</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
