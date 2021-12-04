@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3.2.20"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="https://use.typekit.net/ddz2tth.css">
     <link rel="stylesheet" href="assets/fa/css/all.min.css">
+    <link rel="stylesheet" href="css/hint.min.css">
+    <link rel="stylesheet" href="css/select.css">
+    <link rel="stylesheet" href="css/checkbox.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/btn.css">
     <link rel="stylesheet" href="css/swal.css">
     <title>Dichtel Wichtel</title>
 </head>
+
 <body>
     <div id="logo">
         <img src="assets/logo.png" alt="Dichtel Wichtel Logo">
@@ -23,34 +30,89 @@
             <h3>Einfach unten Namen und E-Mail eintragen und auf Wichtel Alarm klicken</h3>
         </div>
         <div id="form">
-            <div class="input-group" data-id="1">
-                <p>1.</p>
-                <input type="text" name="name-1" id="name-1" placeholder="Name" value="Nico A">
-                <input type="email" name="mail-1" id="mail-1" placeholder="E-Mail" value="nicolai.albrecht96@gmail.com">
-                <span style="width: 28px; height: 32px;"></span>
-                <!-- <i class="fas fa-trash remove-user-icon fa-2x" data-id="1"></i> -->
+            <div class="default-role-item" v-if="enablePresents">
+                <p style="text-align: center;">Standard Beziehung zwischen allen Personen (Aussnahmen können definiert werden). Komplexe Beziehungen können in den Einstellungen aktiviert werden.</p>
+                <select v-model="defaultRelation">
+                    <option selected disabled value="">Beziehung auswählen</option>
+                    <option v-for="cat in categories" :value="cat">{{cat}}</option>
+                </select>
             </div>
-            <div class="input-group" data-id="2">
-                <p>2.</p>
-                <input type="text" name="name-2" id="name-2" placeholder="Name" value="Nico B">
-                <input type="email" name="mail-2" id="mail-2" placeholder="E-Mail" value="nicolai.albrecht@web.de">
-                <i class="fas fa-trash remove-user-icon fa-2x" data-id="2"></i>
-            </div>
-            <div class="input-group" data-id="3">
-                <p>3.</p>
-                <input type="text" name="name-3" id="name-3" placeholder="Name" value="Nico C">
-                <input type="email" name="mail-3" id="mail-3" placeholder="E-Mail" value="nico4albi@web.de">
-                <i class="fas fa-trash remove-user-icon fa-2x" data-id="3"></i>
+            <div class="user-item" v-for="(user, index) of users" :key="user.id">
+                <div class="input-group">
+                    <p>{{(index + 1)}}.</p>
+                    <input type="text" placeholder="Name" aria-label="Name benötigt"
+                        v-model.trim="user.name" :class="{ error: !validateName(user.id)}">
+                    <span>Name wird benötigt</span>
+                    <input type="email" placeholder="E-Mail" 
+                        v-model.trim="user.mail" :class="{ error: !validateMail(user.id)}">
+                    <span>Keine valide E-Mail Adresse</span>
+                    <!-- <i class=""></i> -->
+                    <span v-if="enablePresents" class="hint--top"
+                        aria-label="Beziehungen für bessere Geschenkvorschläge bearbeiten">
+                        <i class="fab fa-connectdevelop toggle-relations-icon fa-2x" @click="toggleRelations(user.id)"
+                            :class="{ active: user.showRelations}"></i>
+                    </span>
+                    <span v-if="user.id > 2" class="hint--top" aria-label="Teilnehmer entfernen">
+                        <i class="fas fa-trash remove-user-icon fa-2x" @click="removeUser(user.id)"></i>
+                    </span>
+                    <span v-else style="width: 28px; height: 32px;"></span>
+                </div>
+                <div class="relations-container" v-if="user.showRelations && enablePresents && enableComplexRelations">
+                    <div class="relation-item" v-for="(relation, index) of user.relations">
+                        <p>{{getUserById(relation.to).name ? getUserById(relation.to).name :
+                            (getUserById(relation.to).id + 1) + '. (kein Name eingegeben)'}} ist</p>
+                        <select v-model="relation.type">
+                            <option selected disabled value="">Beziehung auswählen</option>
+                            <option v-for="cat in categories" :value="cat">{{cat}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="relations-container" v-if="user.showRelations && enablePresents && !enableComplexRelations">
+                    <div class="relation-item">
+                        <p>Ist von allen anderen</p>
+                        <select v-model="user.specialRelation">
+                            <option selected value="">Wie oben definiert</option>
+                            <option v-for="cat in categories" :value="cat">{{cat}}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="button-wrapper">
-            <button class="bttn-unite bttn-lg bttn-primary" id="add-user-btn">Person hinzufügen</button>
+            <button class="bttn-unite bttn-lg bttn-primary" @click="addUser" id="add-user-btn">Person
+                hinzufügen</button>
+            <button class="bttn-unite bttn-lg bttn-primary" @click="showSettings">Einstellungen</button>
             <br>
             <br>
-            <button class="bttn-unite bttn-lg bttn-primary" id="wichtel-btn">Wichtel Alarm</button>
+            <button class="bttn-unite bttn-lg bttn-primary" @click="submitData" id="wichtel-btn" :disabled="!validateForm" >Wichtel Alarm</button>
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <template id="settings-modal">
+        <swal-title>
+          Einstellungen
+        </swal-title>
+        <swal-html>
+            <label class="checkbox">
+                Geschenkvorschläge zu E-Mail hinzufügen
+                <input type="checkbox" name="enable-presents" id="enable-presents">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox" v-if="enablePresents">
+                Komplexe Beziehungen aktivieren
+                <input type="checkbox" name="enable-detailed-relations" id="enable-detailed-relations">
+                <span class="checkmark"></span>
+            </label>
+        </swal-html>
+        <swal-button type="confirm">
+          Speichern
+        </swal-button>
+        <swal-button type="cancel">
+          Abbrechen
+        </swal-button>
+        <swal-param name="allowEscapeKey" value="false" />
+      </template>
+    <script src="js/main.js" type="application/javascript"></script>
 </body>
+
 </html>

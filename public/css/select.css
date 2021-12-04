@@ -1,0 +1,55 @@
+select {
+    -webkit-appearance: none !important;
+       -moz-appearance: none !important;
+            appearance: none !important;
+    /* display: inline-block; */
+    -moz-padding-start: calc(10px - 3px);
+    border: 2px;
+    margin: 0 10px;
+    width: 25vw;
+    padding: 2px 15px;
+    font-size: 1.2em;
+    background-color: rgba(0,0,0,0);
+    /* background-color: #94f7ed; */
+    color: #f7b394;
+    border-color: #f7b394;
+    border-style: solid;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    opacity: 1; /* Firefox */
+}
+
+select::-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+select::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+option:disabled {
+    color: #ffcbb3;
+    font-family: broadacre-thin-0, sans-serif !important;
+    font-weight: 100;
+    font-style: normal;
+}

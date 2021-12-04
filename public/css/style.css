@@ -50,16 +50,43 @@ body {
 
 #form {
     display: flex;
-    width: 100%;
+    width: 66%;
     flex-wrap: wrap;
     justify-content: center;
     align-items: stretch;
     align-content: center;
     flex-direction: column;
+    background-color: rgba(0,0,0,.5);
+    padding: 0px 50px 25px 50px;
+    border-color: #1a7178;
+    border-style: solid;
+    border-width: 7px;
+    background-clip: border-box;
+    border-radius: 3px;
 }
 
 @media screen and (max-width:720px) {
-    #form .input-group {
+    #form .user-item {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        margin-top: 15px;
+        flex-direction: column;
+    }
+    #form .default-role-item {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        margin-top: 15px;
+        flex-direction: column;
+    }
+    .input-group {
         display: flex;
         width: 100%;
         flex-wrap: wrap;
@@ -70,39 +97,92 @@ body {
         flex-direction: column;
     }
 }
+
 @media screen and (min-width:720px) {
-    #form .input-group {
+    #form .user-item {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: stretch;
         align-content: stretch;
         margin-top: 15px;
+        flex-direction: column;
+    }
+    #form .default-role-item {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: stretch;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        flex-direction: column;
+    }
+    .input-group {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        margin-top: 15px;
+        flex-direction: row;
     }
 }
 
-#form .input-group p {
-    color: #1a7178;
+.input-group p {
+    color: #93f7ed;
     font-size: 1.5em;
     width: 28px;
     margin: 0;
 }
 
-#form .input-group input {
+.input-group input {
     /* border-radius: 3px; */
     border: 2px;
     margin: 0 10px;
     width: 25vw;
     padding: 2px 15px;
     font-size: 1.2em;
-    background-color: #94f7ed;
+    background-color: rgba(0,0,0,0);
+    /* background-color: #94f7ed; */
     color: #f7b394;
     border-color: #f7b394;
     border-style: solid;
     box-shadow: none;
 }
 
-#form .input-group input::placeholder {
+.input-group input.error {
+    border-color: red !important;
+}
+
+.input-group input:not(.error) + span {
+    display: none !important;
+}
+
+.input-group input[type=text].error + span {
+    display: inline-block;
+    position: absolute;
+    transform: translate(calc(-25vw + 15px), 25px);
+    color: red;
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 12px;
+}
+
+.input-group input[type=email].error + span {
+    display: inline-block;
+    position: absolute;
+    transform: translate(96px, 25px);
+    font-family: broadacre-thin-0, sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    color: red;
+    font-size: 12px;
+}
+
+.input-group input::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #ffcbb3;
     font-family: broadacre-thin-0, sans-serif;
@@ -111,7 +191,7 @@ body {
     opacity: 1; /* Firefox */
 }
 
-#form .input-group input::-ms-input-placeholder {
+.input-group input::-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: #ffcbb3;
     font-family: broadacre-thin-0, sans-serif;
@@ -119,12 +199,23 @@ body {
     font-style: normal;
 }
 
-#form .input-group input::-ms-input-placeholder {
+.input-group input::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #ffcbb3;
     font-family: broadacre-thin-0, sans-serif;
     font-weight: 100;
     font-style: normal;
+}
+
+.toggle-relations-icon {
+    cursor: pointer;
+    color: #94f7ed !important;
+    margin-right: 10px;
+}
+
+.toggle-relations-icon.active {
+    cursor: pointer;
+    color: #f7b394 !important;
 }
 
 .remove-user-icon {
@@ -138,4 +229,34 @@ body {
 #button-wrapper {
     margin: 20px;
     text-align: center;
+    width: 100%;
+}
+
+#button-wrapper button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#wichtel-btn:disabled {
+    cursor: default;
+    background-color: rgba(0,0,0,.7);
+}
+
+.relations-container {
+    width: 100%;
+    margin-top: 12px;
+    padding-left: 38px;
+}
+
+.relation-item {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-content: space-between;
+    align-items: baseline;
+}
+
+.relation-item > p {
+    display: inline-block;
+    width: calc(50% - 60px);
 }
